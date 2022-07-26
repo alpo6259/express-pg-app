@@ -1,17 +1,19 @@
 const { Router } = require('express');
+const { userController } = require('../controllers');
+const { validate } = require('../middleware');
 
 const usersRouter = Router();
 
-//users
-usersRouter.post('/');
+usersRouter
+  .route('/')
+  .get(userController.getUserAll)
+  .post(validate.validateUserCreated, userController.createUser);
 
 usersRouter
   .route('/:userId')
-  .patch(() => {})
-  .delete(() => {});
+  .patch(validate.validateUserUpdated, userController.updateUser)
+  .delete(userController.deleteUser);
 
-usersRouter.get('/:userId/phones', (req, res) => {
-  res.send('dsfsfdfdfdfdf');
-});
+usersRouter.get('/:userId/phones', userController.getUsersPhones);
 
 module.exports = usersRouter;

@@ -1,10 +1,9 @@
 const { Router } = require('express');
+const { phoneController } = require('../controllers');
+const { paginate } = require('../middleware');
 
 const phonesRouter = Router();
 
-//phones
-phonesRouter.get('/', (req, res) => {
-  res.send('jdjdjdjdjdjdjdjjddj');
-});
+phonesRouter.get('/', paginate.paginate, phoneController.getPhones);
 
 module.exports = phonesRouter;
